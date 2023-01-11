@@ -1,4 +1,4 @@
-package com.foodshop.user_service.models;
+package com.foodshop.user_service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
