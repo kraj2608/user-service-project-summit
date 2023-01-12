@@ -4,6 +4,7 @@ import com.foodshop.user_service.dto.RegisterUserDTO;
 import com.foodshop.user_service.models.User;
 
 public interface UserService {
-    User saveUser(User registerUserDTO);
+    User signUp(User registerUserDTO);
+
 
 }
