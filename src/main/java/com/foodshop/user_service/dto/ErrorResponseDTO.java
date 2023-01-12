@@ -1,17 +1,20 @@
 package com.foodshop.user_service.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class ErrorResponse {
+@AllArgsConstructor
+public class ErrorResponseDTO {
+
+    @JsonProperty("status_code")
     private int statusCode;
     private String message;
 
-    public ErrorResponse(String message) {
+    public ErrorResponseDTO(String message) {
         super();
         this.message = message;
     }

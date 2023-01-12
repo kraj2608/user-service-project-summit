@@ -1,7 +1,7 @@
 package com.foodshop.user_service.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.foodshop.user_service.enums.UserRole;
+import com.foodshop.user_service.enums.USEROLE;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "users")
 @Data
-public class User {
+public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -43,7 +43,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false,name = "role")
-    private UserRole role = UserRole.CUSTOMER;
+    private USEROLE role = USEROLE.ADMIN;
 
 
 }

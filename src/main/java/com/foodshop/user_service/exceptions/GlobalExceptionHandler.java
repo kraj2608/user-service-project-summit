@@ -1,11 +1,12 @@
 package com.foodshop.user_service.exceptions;
 
-import com.foodshop.user_service.dto.ErrorResponse;
+import com.foodshop.user_service.dto.ErrorResponseDTO;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -50,7 +51,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = UserAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody ErrorResponse handleException(UserAlreadyExistsException ex) {
-        return new ErrorResponse(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    public @ResponseBody ErrorResponseDTO handleException(UserAlreadyExistsException ex) {
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), ex.getMessage());
+    }
+
+    @ExceptionHandler(value = BadCredentialsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ErrorResponseDTO handleBadCredentialException(BadCredentialsException ex) {
+        return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Invalid email or password");
     }
 }
