@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,8 +41,8 @@ public class UserController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> signInUser(@Valid @RequestBody SignInUserDTO user) throws BadCredentialsException {
-        Authentication authenticate = authenticationManager
+    public ResponseEntity<UserModel> signInUser(@Valid @RequestBody SignInUserDTO user) throws BadCredentialsException {
+        authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(
                                 user.getEmail(), user.getPassword()

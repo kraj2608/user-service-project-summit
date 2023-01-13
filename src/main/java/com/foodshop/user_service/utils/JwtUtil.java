@@ -17,7 +17,7 @@ import java.util.Map;
 public class JwtUtil {
 
     @Value("${jwt.jwtSecret}")
-    private String JWT_SECRET;
+    private String jwtSecret;
 
     @Value(value = "${jwt.jwtExpirationMs}")
     private int jwtExpirationMs;
@@ -28,7 +28,7 @@ public class JwtUtil {
     }
 
     private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(this.JWT_SECRET);
+        byte[] keyBytes = Decoders.BASE64.decode(this.jwtSecret);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
