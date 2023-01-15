@@ -1,26 +1,29 @@
 package com.foodshop.user_service.services;
 
+import com.foodshop.user_service.dto.AuthenticationResponseDTO;
+import com.foodshop.user_service.dto.SignInUserDTO;
 import com.foodshop.user_service.exceptions.UserAlreadyExistsException;
 import com.foodshop.user_service.models.UserModel;
 import com.foodshop.user_service.respositories.UserRepository;
+import com.foodshop.user_service.utils.JwtUtil;
 import com.foodshop.user_service.utils.PasswordHelper;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
-
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtil jwtUtil;
 
     @Override
     public UserModel signUp(UserModel user) throws UserAlreadyExistsException{
@@ -38,13 +41,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!userRepository.existsByEmail(username)) {
-            throw new UsernameNotFoundException("Email or password is invalid");
-        }
-        UserModel user = userRepository.getUserByEmail(username);
+    public AuthenticationResponseDTO signIn(SignInUserDTO signInUserDTO) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        signInUserDTO.getEmail(),
+                        signInUserDTO.getPassword()
+                )
+        );
+        UserModel userModel = userRepository.getUserByEmail(signInUserDTO.getEmail());
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(user.getRole());
-        return new User(user.getEmail(), user.getPassword(), authorities);
+        authorities.add(userModel.getRole());
+        String jwtToken = jwtUtil.generateAccessToken(new User(userModel.getEmail(), userModel.getPassword(), authorities));
+        return AuthenticationResponseDTO.builder()
+                .user(userModel)
+                .accessToken(jwtToken)
+                .build();
     }
+
+
 }
