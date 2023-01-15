@@ -18,6 +18,6 @@ class JwtUtilTest {
 
     @Test
     void generateToken() {
-        assertNotNull(jwtUtil.generateToken(new User("username","Password",new ArrayList<>())));
+        assertNotNull(jwtUtil.generateAccessToken(new User("username","Password",new ArrayList<>())));
     }
 }

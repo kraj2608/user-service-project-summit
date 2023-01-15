@@ -15,6 +15,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,4 +61,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public @ResponseBody ErrorResponseDTO handleBadCredentialException(BadCredentialsException ex) {
         return new ErrorResponseDTO(HttpStatus.BAD_REQUEST.value(), "Invalid email or password");
     }
+
+
 }
