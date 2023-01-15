@@ -1,5 +1,6 @@
 package com.foodshop.user_service.config;
 
+import com.foodshop.user_service.enums.TOKEN_TYPE;
 import com.foodshop.user_service.utils.JwtUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,7 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component
@@ -35,21 +35,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
         final String jwtToken = authHeader.substring(7);
-        final String userEmail = jwtUtil.extractUsername(jwtToken);
-
+        final String isRefreshToken = request.getHeader("IsRefreshToken");
+        boolean refreshToken = isRefreshToken != null && isRefreshToken.equals("true");
+        TOKEN_TYPE tokenType = refreshToken ? TOKEN_TYPE.REFRESH_TOKEN : TOKEN_TYPE.ACCESS_TOKEN;
+        final String userEmail = jwtUtil.extractTokenUsername(jwtToken,tokenType);
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
-            if (jwtUtil.isTokenValid(jwtToken,userDetails)){
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.getAuthorities()
-                );
-                authenticationToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-            }
+                if (jwtUtil.isTokenValid(jwtToken,userDetails,tokenType)){
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authenticationToken.setDetails(
+                            new WebAuthenticationDetailsSource().buildDetails(request)
+                    );
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
         }
         filterChain.doFilter(request,response);
     }

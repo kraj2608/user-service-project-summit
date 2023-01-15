@@ -51,10 +51,12 @@ public class UserServiceImpl implements IUserService {
         UserModel userModel = userRepository.getUserByEmail(signInUserDTO.getEmail());
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(userModel.getRole());
-        String jwtToken = jwtUtil.generateAccessToken(new User(userModel.getEmail(), userModel.getPassword(), authorities));
+        String jwtAccessToken = jwtUtil.generateAccessToken(new User(userModel.getEmail(), userModel.getPassword(), authorities));
+        String jwtRefreshToken = jwtUtil.generateRefreshToken(new User(userModel.getEmail(), userModel.getPassword(), authorities));
         return AuthenticationResponseDTO.builder()
                 .user(userModel)
-                .accessToken(jwtToken)
+                .accessToken(jwtAccessToken)
+                .refreshToken(jwtRefreshToken)
                 .build();
     }
 
