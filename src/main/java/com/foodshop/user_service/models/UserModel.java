@@ -43,7 +43,7 @@ public class UserModel {
     private LocalDateTime updatedAt;
 
     @Column(nullable = false,name = "role")
-    private USEROLE role = USEROLE.ADMIN;
+    private USEROLE role = USEROLE.CUSTOMER;
 
 
 }

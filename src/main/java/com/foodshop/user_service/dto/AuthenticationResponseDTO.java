@@ -3,15 +3,21 @@ package com.foodshop.user_service.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.foodshop.user_service.models.UserModel;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
 
 @Builder
-@Getter
+@Data
 public class AuthenticationResponseDTO {
     private UserModel user;
     @JsonProperty("refresh_token")
     private String refreshToken;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty("access_time")
     private String accessToken;
+
+    private String message;
+
+    @JsonProperty("status_code")
+    private int statusCode;
+
 }

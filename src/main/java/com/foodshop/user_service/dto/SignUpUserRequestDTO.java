@@ -10,7 +10,7 @@ import lombok.*;
 
 
 @Data
-public class SignUpUserDTO {
+public class SignUpUserRequestDTO {
     @NotEmpty(message = "Email is required.")
     @Email(message = "Invalid email address", flags = { Pattern.Flag.CASE_INSENSITIVE })
     private String email;

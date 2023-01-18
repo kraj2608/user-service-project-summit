@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SignInUserDTO {
+public class SignInUserRequestDTO {
     @NotEmpty(message = "Email is required")
     @Email(message = "Email is invalid", flags = { Pattern.Flag.CASE_INSENSITIVE })
     private String email;

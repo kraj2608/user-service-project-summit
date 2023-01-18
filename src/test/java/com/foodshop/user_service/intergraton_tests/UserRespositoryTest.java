@@ -2,7 +2,7 @@ package com.foodshop.user_service.intergraton_tests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.foodshop.user_service.UserServiceApplication;
-import com.foodshop.user_service.dto.SignUpUserDTO;
+import com.foodshop.user_service.dto.SignUpUserRequestDTO;
 import com.foodshop.user_service.models.UserModel;
 import com.foodshop.user_service.respositories.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -37,7 +37,7 @@ class UserRespositoryTest {
      */
     @Test
     void registrationWorksThroughAllLayers() throws Exception {
-        SignUpUserDTO user = new SignUpUserDTO();
+        SignUpUserRequestDTO user = new SignUpUserRequestDTO();
         user.setEmail("Test@gmail.com");
         user.setPassword("Test@123");
         user.setFirstName("First Name");
