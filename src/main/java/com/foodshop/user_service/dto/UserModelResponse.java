@@ -7,17 +7,12 @@ import lombok.Data;
 
 @Builder
 @Data
-public class AuthenticationResponseDTO {
+public class UserModelResponse {
+
     private UserModel user;
-    @JsonProperty("refresh_token")
-    private String refreshToken;
-
-    @JsonProperty("access_token")
-    private String accessToken;
-
-    private String message;
 
     @JsonProperty("status_code")
     private int statusCode;
 
+    private String message;
 }

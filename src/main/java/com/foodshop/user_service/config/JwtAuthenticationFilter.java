@@ -39,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         boolean refreshToken = isRefreshToken != null && isRefreshToken.equals("true");
         TOKEN_TYPE tokenType = refreshToken ? TOKEN_TYPE.REFRESH_TOKEN : TOKEN_TYPE.ACCESS_TOKEN;
         final String userEmail = jwtUtil.extractTokenUsername(jwtToken,tokenType);
+        // Add to utility functions
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){
             UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
                 if (jwtUtil.isTokenValid(jwtToken,userDetails,tokenType)){
