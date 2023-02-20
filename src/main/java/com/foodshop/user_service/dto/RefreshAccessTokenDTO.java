@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 public class RefreshAccessTokenDTO {
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty("access_token")
     private String accessToken;
     private String message;
 

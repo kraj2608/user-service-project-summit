@@ -30,12 +30,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
+        final String isRefreshToken = request.getHeader("IsRefreshToken");
+
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
         final String jwtToken = authHeader.substring(7);
-        final String isRefreshToken = request.getHeader("IsRefreshToken");
+
         boolean refreshToken = isRefreshToken != null && isRefreshToken.equals("true");
         TOKEN_TYPE tokenType = refreshToken ? TOKEN_TYPE.REFRESH_TOKEN : TOKEN_TYPE.ACCESS_TOKEN;
         final String userEmail = jwtUtil.extractTokenUsername(jwtToken,tokenType);
