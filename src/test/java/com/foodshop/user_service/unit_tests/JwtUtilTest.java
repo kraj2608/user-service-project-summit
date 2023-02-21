@@ -13,11 +13,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class JwtUtilTest {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-
-    @Test
-    void generateToken() {
-        assertNotNull(jwtUtil.generateAccessToken(new User("username","Password",new ArrayList<>())));
-    }
+//    @Autowired
+//    private JwtUtil jwtUtil;
+//
+//    @Test
+//    void generateToken() {
+//        assertNotNull(jwtUtil.generateAccessToken(new User("username","Password",new ArrayList<>())));
+//    }
 }

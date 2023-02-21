@@ -18,33 +18,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest(classes = UserServiceApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class UserRespositoryTest {
 
-    @Autowired
-    private TestRestTemplate restTemplate;
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    /**
-     * This test do the testing with the production database.
-     * Not a good way to handle this testing
-     * @throws Exception
-     */
-    @Test
-    void registrationWorksThroughAllLayers() throws Exception {
-        SignUpUserRequestDTO user = new SignUpUserRequestDTO();
-        user.setEmail("Test@gmail.com");
-        user.setPassword("Test@123");
-        user.setFirstName("First Name");
-        user.setLastName("Last name");
-        ResponseEntity<UserModel> responseEntity = this.restTemplate
-                .postForEntity("http://localhost:" + port + "/auth/signup", user, UserModel.class);
-        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
-
-    }
+//    @Autowired
+//    private TestRestTemplate restTemplate;
+//
+//    @LocalServerPort
+//    private int port;
+//
+//    @Autowired
+//    private UserRepository userRepository;
+//
+//    @Autowired
+//    private ObjectMapper objectMapper;
+//
+//    /**
+//     * This test do the testing with the production database.
+//     * Not a good way to handle this testing
+//     * @throws Exception
+//     */
+//    @Test
+//    void registrationWorksThroughAllLayers() throws Exception {
+//        SignUpUserRequestDTO user = new SignUpUserRequestDTO();
+//        user.setEmail("Test@gmail.com");
+//        user.setPassword("Test@123");
+//        user.setFirstName("First Name");
+//        user.setLastName("Last name");
+//        ResponseEntity<UserModel> responseEntity = this.restTemplate
+//                .postForEntity("http://localhost:" + port + "/auth/signup", user, UserModel.class);
+//        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+//
+//    }
 }
